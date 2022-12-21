@@ -64,6 +64,10 @@ def zookeeper_by_id(id):
 @app.route('/enclosure/<int:id>')
 def enclosure_by_id(id):
     enclosure = Enclosure.query.filter(Enclosure.id == id).first()
+    if not enclosure:
+        response_body = '<h1>404 enclosure not found</h1>'
+        response = make_response(response_body, 404)
+        return response
     response_body = f''
     response_body += f'<ul>ID: {enclosure.id}</ul>'
     response_body += f'<ul>Environment: {enclosure.environment}</ul>'
